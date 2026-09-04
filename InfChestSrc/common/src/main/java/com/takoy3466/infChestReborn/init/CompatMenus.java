@@ -7,8 +7,8 @@ import net.minecraft.world.inventory.MenuType;
 
 public class CompatMenus {
 
+    public static final CompatHolder<MenuType<MenuInfChest>> INF_CHEST = CompatRegistry.registerMenuType("inf_chest", MenuInfChest::new);
+
     public static void init() {
     }
-
-    public static final CompatHolder<MenuType<MenuInfChest>> INF_CHEST = CompatRegistry.registerMenuType();
 }

@@ -28,8 +28,12 @@ public class InfChestStack {
         return storedItem.isEmpty() || count <= 0;
     }
 
+    public int insert(ItemStack stack) {
+        return insert(stack, stack.getCount());
+    }
+
     public int insert(ItemStack stack, int amount) {
-        if (stack.isEmpty() || amount <= 0) {
+        if (stack.isEmpty()) {
             return 0;
         }
 
@@ -39,7 +43,7 @@ public class InfChestStack {
             return 0;
         }
 
-        int inserted = (int) Math.min(amount, MAX_COUNT - (long) count);
+        int inserted = (int) Math.min(stack.getCount(), MAX_COUNT - (long) this.count);
 
         count += inserted;
 

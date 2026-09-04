@@ -8,7 +8,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
-@EventBusSubscriber(modid = InfChestCommon.MOD_ID)
+@EventBusSubscriber(modid = InfChestCommon.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class Event {
 
     @SubscribeEvent

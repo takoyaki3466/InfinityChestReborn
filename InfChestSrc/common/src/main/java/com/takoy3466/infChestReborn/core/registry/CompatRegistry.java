@@ -1,7 +1,8 @@
 package com.takoy3466.infChestReborn.core.registry;
 
 import com.mojang.serialization.Codec;
-import com.takoy3466.infChestReborn.core.BlockEntitySup;
+import com.takoy3466.infChestReborn.core.interfaces.CompatBlockEntitySupplier;
+import com.takoy3466.infChestReborn.core.interfaces.CompatMenuSupplier;
 import com.takoy3466.infChestReborn.core.platform.Services;
 import com.takoy3466.infChestReborn.core.registry.holder.CompatDoubleHolder;
 import com.takoy3466.infChestReborn.core.registry.holder.CompatHolder;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.function.Supplier;
 
-public class CompatRegistry {
+public final class CompatRegistry {
 
     public static <T extends Item> CompatHolder<T> registerItem(String id, Supplier<T> supplier) {
         CompatHolder<T> compatHolder = CompatHolder.create(id);
@@ -44,13 +45,17 @@ public class CompatRegistry {
         return registerBlock(id, blockSup, () -> new BlockItem(blockSup.get(), properties));
     }
 
-    public static <T extends BlockEntity> CompatHolder<BlockEntityType<T>> registerBlockEntityType(String id, BlockEntitySup<T> supplier, CompatDoubleHolder.BlockHolder<? extends Block> blockHolder) {
+    public static <T extends BlockEntity> CompatHolder<BlockEntityType<T>> registerBlockEntityType(String id, CompatBlockEntitySupplier<T> supplier, CompatDoubleHolder.BlockHolder<? extends Block> blockHolder) {
         CompatHolder<BlockEntityType<T>> compatHolder = CompatHolder.create(id);
         Services.REGISTRY.registerBlockEntityType(compatHolder, supplier, blockHolder);
         return compatHolder;
     }
 
-
+    public static <T extends AbstractContainerMenu> CompatHolder<MenuType<T>> registerMenuType(String id, CompatMenuSupplier<T> supplier) {
+        CompatHolder<MenuType<T>> compatHolder = CompatHolder.create(id);
+        Services.REGISTRY.registerMenuType(compatHolder, supplier);
+        return compatHolder;
+    }
 
     public static <T> CompatHolder<DataComponentType<T>> registerDataComponentType(String id, Codec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
         CompatHolder<DataComponentType<T>> compatHolder = CompatHolder.create(id);

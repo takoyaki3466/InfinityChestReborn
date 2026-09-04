@@ -1,12 +1,15 @@
 package com.takoy3466.infChestReborn.core.platform;
 
 import com.mojang.serialization.Codec;
-import com.takoy3466.infChestReborn.core.BlockEntitySup;
+import com.takoy3466.infChestReborn.core.interfaces.CompatBlockEntitySupplier;
+import com.takoy3466.infChestReborn.core.interfaces.CompatMenuSupplier;
 import com.takoy3466.infChestReborn.core.registry.holder.CompatDoubleHolder;
 import com.takoy3466.infChestReborn.core.registry.holder.CompatHolder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -24,7 +27,9 @@ public interface IRegistryPlatform {
 
     <T extends Block, U extends BlockItem> void registerBlock(CompatDoubleHolder.BlockHolder<T> doubleHolder, Supplier<T> blockSup, Supplier<U> itemSup);
 
-    <T extends BlockEntity> void registerBlockEntityType(CompatHolder<BlockEntityType<T>> compatHolder, BlockEntitySup<T> supplier, CompatDoubleHolder.BlockHolder<? extends Block> blockHolder);
+    <T extends BlockEntity> void registerBlockEntityType(CompatHolder<BlockEntityType<T>> compatHolder, CompatBlockEntitySupplier<T> supplier, CompatDoubleHolder.BlockHolder<? extends Block> blockHolder);
+
+    <T extends AbstractContainerMenu> void registerMenuType(CompatHolder<MenuType<T>> compatHolder, CompatMenuSupplier<T> supplier);
 
     <T> void registerDataComponentType(CompatHolder<DataComponentType<T>> compatHolder, Codec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec);
 

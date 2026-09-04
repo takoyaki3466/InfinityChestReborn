@@ -1,10 +1,10 @@
-package com.takoy3466.infChestReborn.core;
+package com.takoy3466.infChestReborn.core.interfaces;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 @FunctionalInterface
-public interface BlockEntitySup<T extends BlockEntity> {
+public interface CompatBlockEntitySupplier<T extends BlockEntity> {
     T create(BlockPos pos, BlockState state);
 }

@@ -2,7 +2,8 @@ package com.takoy3466.infChestReborn.core.platform;
 
 import com.mojang.serialization.Codec;
 import com.takoy3466.infChestReborn.InfChestCommon;
-import com.takoy3466.infChestReborn.core.BlockEntitySup;
+import com.takoy3466.infChestReborn.core.interfaces.CompatBlockEntitySupplier;
+import com.takoy3466.infChestReborn.core.interfaces.CompatMenuSupplier;
 import com.takoy3466.infChestReborn.core.Identifier;
 import com.takoy3466.infChestReborn.core.registry.holder.CompatDoubleHolder;
 import com.takoy3466.infChestReborn.core.registry.holder.CompatHolder;
@@ -11,6 +12,9 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -22,7 +26,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.function.Supplier;
 
-public class FabricRegistryPlatform implements IRegistryPlatform {
+public final class FabricRegistryPlatform implements IRegistryPlatform {
     @Override
     public <T extends Item> void registerItem(CompatHolder<T> compatHolder, Supplier<T> supplier) {
         Identifier identifier = new Identifier(InfChestCommon.MOD_ID, compatHolder.getId());
@@ -40,10 +44,16 @@ public class FabricRegistryPlatform implements IRegistryPlatform {
     }
 
     @Override
-    public <T extends BlockEntity> void registerBlockEntityType(CompatHolder<BlockEntityType<T>> compatHolder, BlockEntitySup<T> supplier, CompatDoubleHolder.BlockHolder<? extends Block> blockHolder) {
+    public <T extends BlockEntity> void registerBlockEntityType(CompatHolder<BlockEntityType<T>> compatHolder, CompatBlockEntitySupplier<T> supplier, CompatDoubleHolder.BlockHolder<? extends Block> blockHolder) {
         Identifier identifier = new Identifier(InfChestCommon.MOD_ID, compatHolder.getId());
         BlockEntityType<T> registered = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, identifier.get(), BlockEntityType.Builder.of(supplier::create, blockHolder.getBlock()).build(null));
         compatHolder.set(() -> registered);
+    }
+
+    @Override
+    public <T extends AbstractContainerMenu> void registerMenuType(CompatHolder<MenuType<T>> compatHolder, CompatMenuSupplier<T> supplier) {
+        Identifier identifier = new Identifier(InfChestCommon.MOD_ID, compatHolder.getId());
+        Registry.register(BuiltInRegistries.MENU, identifier.get(), new MenuType<>(supplier::create, FeatureFlags.DEFAULT_FLAGS));
     }
 
     @Override

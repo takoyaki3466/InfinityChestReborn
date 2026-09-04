@@ -8,8 +8,8 @@ import java.util.List;
 
 public class CompatTabs {
 
+    public static final List<CompatHolder<? extends Item>> ITEMS = new ArrayList<>();
+
     public static void init() {
     }
-
-    public static final List<CompatHolder<? extends Item>> ITEMS = new ArrayList<>();
 }

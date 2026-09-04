@@ -7,8 +7,8 @@ import net.minecraft.world.item.Item;
 
 public class CompatBlocks {
 
+    public static final CompatDoubleHolder.BlockHolder<BlockInfChest> INF_CHEST = CompatRegistry.registerBlock("inf_chest", BlockInfChest::new, new Item.Properties());
+
     public static void init() {
     }
-
-    public static final CompatDoubleHolder.BlockHolder<BlockInfChest> INF_CHEST = CompatRegistry.registerBlock("inf_chest", BlockInfChest::new, new Item.Properties());
 }
