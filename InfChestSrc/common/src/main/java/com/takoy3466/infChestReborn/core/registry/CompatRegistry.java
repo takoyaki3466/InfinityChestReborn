@@ -1,13 +1,11 @@
-package com.takoy3466.modid.core.registry;
+package com.takoy3466.infChestReborn.core.registry;
 
 import com.mojang.serialization.Codec;
-import com.takoy3466.modid.core.BlockEntitySup;
-import com.takoy3466.modid.core.platform.Services;
-import com.takoy3466.modid.core.registry.holder.CompatDoubleHolder;
-import com.takoy3466.modid.core.registry.holder.CompatHolder;
-import com.takoy3466.modid.init.CompatBlocks;
-import com.takoy3466.modid.init.CompatItems;
-import com.takoy3466.modid.init.CompatTabs;
+import com.takoy3466.infChestReborn.core.BlockEntitySup;
+import com.takoy3466.infChestReborn.core.platform.Services;
+import com.takoy3466.infChestReborn.core.registry.holder.CompatDoubleHolder;
+import com.takoy3466.infChestReborn.core.registry.holder.CompatHolder;
+import com.takoy3466.infChestReborn.init.CompatTabs;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -38,6 +36,10 @@ public class CompatRegistry {
         CompatDoubleHolder.BlockHolder<B> doubleHolder = CompatDoubleHolder.BlockHolder.of(blockHolder, itemHolder);
         Services.REGISTRY.registerBlock(doubleHolder, blockSup, itemSup);
         return doubleHolder;
+    }
+
+    public static <B extends Block, U extends BlockItem> CompatDoubleHolder.BlockHolder<B> registerBlock(String id, Supplier<B> blockSup, Item.Properties properties) {
+        return registerBlock(id, blockSup, () -> new BlockItem(blockSup.get(), properties));
     }
 
     public static <T extends BlockEntity> CompatHolder<BlockEntityType<T>> registerBlockEntityType(String id, BlockEntitySup<T> supplier, CompatDoubleHolder.BlockHolder<? extends Block> blockHolder) {
