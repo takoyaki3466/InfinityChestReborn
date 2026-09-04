@@ -9,6 +9,8 @@ import com.takoy3466.infChestReborn.init.CompatTabs;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -47,6 +49,8 @@ public class CompatRegistry {
         Services.REGISTRY.registerBlockEntityType(compatHolder, supplier, blockHolder);
         return compatHolder;
     }
+
+
 
     public static <T> CompatHolder<DataComponentType<T>> registerDataComponentType(String id, Codec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
         CompatHolder<DataComponentType<T>> compatHolder = CompatHolder.create(id);
