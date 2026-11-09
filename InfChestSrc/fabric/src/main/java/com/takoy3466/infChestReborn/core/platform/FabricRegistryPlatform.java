@@ -35,10 +35,10 @@ public final class FabricRegistryPlatform implements IRegistryPlatform {
     }
 
     @Override
-    public <T extends Block, U extends BlockItem> void registerBlock(CompatDoubleHolder.BlockHolder<T> doubleHolder, Supplier<T> blockSup, Supplier<U> itemSup) {
+    public <T extends Block> void registerBlock(CompatDoubleHolder.BlockHolder<T> doubleHolder, Supplier<T> blockSup, Item.Properties properties) {
         Identifier identifier = new Identifier(InfChestCommon.MOD_ID, doubleHolder.getBlockHolder().getId());
         T registeredBlock = Registry.register(BuiltInRegistries.BLOCK, identifier.get(), blockSup.get());
-        BlockItem registeredItem = Registry.register(BuiltInRegistries.ITEM, identifier.get(), itemSup.get());
+        BlockItem registeredItem = Registry.register(BuiltInRegistries.ITEM, identifier.get(), new BlockItem(registeredBlock, properties));
         doubleHolder.getBlockHolder().set(() -> registeredBlock);
         doubleHolder.getItemHolder().set(() -> registeredItem);
     }
@@ -53,7 +53,8 @@ public final class FabricRegistryPlatform implements IRegistryPlatform {
     @Override
     public <T extends AbstractContainerMenu> void registerMenuType(CompatHolder<MenuType<T>> compatHolder, CompatMenuSupplier<T> supplier) {
         Identifier identifier = new Identifier(InfChestCommon.MOD_ID, compatHolder.getId());
-        Registry.register(BuiltInRegistries.MENU, identifier.get(), new MenuType<>(supplier::create, FeatureFlags.DEFAULT_FLAGS));
+        MenuType<T> registered = Registry.register(BuiltInRegistries.MENU, identifier.get(), new MenuType<>(supplier::create, FeatureFlags.DEFAULT_FLAGS));
+        compatHolder.set(() -> registered);
     }
 
     @Override

@@ -6,6 +6,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+import java.nio.file.Path;
+
 public interface IUtilPlatform {
 
     boolean hasCraftingRemainingItem(ItemStack stack);
@@ -15,4 +17,6 @@ public interface IUtilPlatform {
     ItemStack getCraftingRemainingItem(ItemStack stack);
 
     int onArrowLoose(ItemStack stack, Level level, Player player, int charge, boolean hasAmmo);
+
+    Path getConfigDirectory();
 }

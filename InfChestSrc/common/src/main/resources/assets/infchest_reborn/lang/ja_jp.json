@@ -1,0 +1,6 @@
+{
+  "block.infchest_reborn.inf_chest": "20億チェスト",
+  "container.infchest_reborn.inf_chest": "20億チェスト (最大%s)",
+  "itemGroup.infchest_reborn": "Infinity Chest Reborn",
+  "infchest_reborn.number_style": "myriad"
+}

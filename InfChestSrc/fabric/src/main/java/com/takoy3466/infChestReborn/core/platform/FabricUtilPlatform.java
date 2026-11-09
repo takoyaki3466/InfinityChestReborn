@@ -1,11 +1,14 @@
 package com.takoy3466.infChestReborn.core.platform;
 
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
+
+import java.nio.file.Path;
 
 public class FabricUtilPlatform implements IUtilPlatform {
     @Override
@@ -26,5 +29,10 @@ public class FabricUtilPlatform implements IUtilPlatform {
     @Override
     public int onArrowLoose(ItemStack stack, Level level, Player player, int charge, boolean hasAmmo) {
         return charge;
+    }
+
+    @Override
+    public Path getConfigDirectory() {
+        return FabricLoader.getInstance().getConfigDir();
     }
 }

@@ -9,9 +9,9 @@ displayName = "InfinityChestReborn" #mandatory
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional (see https://docs.neoforged.net/docs/misc/updatechecker/)
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional (displayed in the mod UI)
 logoFile="infchest_reborn.png" #optional
-credits="" #optional
+credits="Original InfinityChest by takanasayo" #optional
 authors = "takoy3466" #optional
-description = '''write here description''' #mandatory (Supports multiline text)
+description = '''Adds a big storage chest that holds up to two billion items of a single kind. A port of InfinityChest for Minecraft 1.7.10.''' #mandatory (Supports multiline text)
 [[mixins]]
 config = "infchest_reborn.mixins.json"
 [[mixins]]

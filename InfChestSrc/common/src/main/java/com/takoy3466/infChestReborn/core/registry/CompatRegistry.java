@@ -32,17 +32,13 @@ public final class CompatRegistry {
         return compatHolder;
     }
 
-    public static <B extends Block, U extends BlockItem> CompatDoubleHolder.BlockHolder<B> registerBlock(String id, Supplier<B> blockSup, Supplier<U> itemSup) {
+    public static <B extends Block> CompatDoubleHolder.BlockHolder<B> registerBlock(String id, Supplier<B> blockSup, Item.Properties properties) {
         CompatHolder<B> blockHolder = CompatHolder.create(id);
         CompatHolder<BlockItem> itemHolder = CompatHolder.create(id);
         CompatTabs.ITEMS.add(itemHolder);
         CompatDoubleHolder.BlockHolder<B> doubleHolder = CompatDoubleHolder.BlockHolder.of(blockHolder, itemHolder);
-        Services.REGISTRY.registerBlock(doubleHolder, blockSup, itemSup);
+        Services.REGISTRY.registerBlock(doubleHolder, blockSup, properties);
         return doubleHolder;
-    }
-
-    public static <B extends Block, U extends BlockItem> CompatDoubleHolder.BlockHolder<B> registerBlock(String id, Supplier<B> blockSup, Item.Properties properties) {
-        return registerBlock(id, blockSup, () -> new BlockItem(blockSup.get(), properties));
     }
 
     public static <T extends BlockEntity> CompatHolder<BlockEntityType<T>> registerBlockEntityType(String id, CompatBlockEntitySupplier<T> supplier, CompatDoubleHolder.BlockHolder<? extends Block> blockHolder) {

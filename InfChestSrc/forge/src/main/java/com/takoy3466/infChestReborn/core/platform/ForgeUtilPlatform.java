@@ -5,7 +5,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fml.loading.FMLPaths;
 import org.jetbrains.annotations.Nullable;
+
+import java.nio.file.Path;
 
 public class ForgeUtilPlatform implements IUtilPlatform {
     @Override
@@ -27,5 +30,10 @@ public class ForgeUtilPlatform implements IUtilPlatform {
     @Override
     public int onArrowLoose(ItemStack stack, Level level, Player player, int charge, boolean hasAmmo) {
         return ForgeEventFactory.onArrowLoose(stack, level, player, charge, hasAmmo);
+    }
+
+    @Override
+    public Path getConfigDirectory() {
+        return FMLPaths.CONFIGDIR.get();
     }
 }

@@ -25,7 +25,7 @@ public interface IRegistryPlatform {
 
     <T extends Item> void registerItem(CompatHolder<T> compatHolder, Supplier<T> supplier);
 
-    <T extends Block, U extends BlockItem> void registerBlock(CompatDoubleHolder.BlockHolder<T> doubleHolder, Supplier<T> blockSup, Supplier<U> itemSup);
+    <T extends Block> void registerBlock(CompatDoubleHolder.BlockHolder<T> doubleHolder, Supplier<T> blockSup, Item.Properties properties);
 
     <T extends BlockEntity> void registerBlockEntityType(CompatHolder<BlockEntityType<T>> compatHolder, CompatBlockEntitySupplier<T> supplier, CompatDoubleHolder.BlockHolder<? extends Block> blockHolder);
 

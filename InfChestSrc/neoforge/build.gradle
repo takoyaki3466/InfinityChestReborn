@@ -3,8 +3,17 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+// 配布 Jar に含めない統合テスト。:infChestSrc:neoforge:runGameTestServer で実行する。
+sourceSets {
+    gametest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
 neoForge {
     version = neoforge_version
+    addModdingDependenciesTo(sourceSets.gametest)
     // Automatically enable neoforge AccessTransformers if the file exists
     def at = project(':' + src_id + ':common').file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
@@ -33,12 +42,46 @@ neoForge {
         server {
             server()
         }
+        gameTestServer {
+            type = "gameTestServer"
+            sourceSet = sourceSets.gametest
+            gameDirectory = file('build/gametest-run')
+        }
     }
     mods {
         "${mod_id}" {
             sourceSet sourceSets.main
+            sourceSet sourceSets.gametest
         }
     }
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        name = "CurseForge"
+        url = "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        // forRepositories(fg.repository) // Uncomment when using ForgeGradle
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+}
+
+dependencies {
+    runtimeOnly "maven.modrinth:iRmWy6ga:BPGKb8pi"
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }

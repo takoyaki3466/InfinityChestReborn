@@ -55,9 +55,9 @@ public final class ForgeRegistryPlatform implements IRegistryPlatform {
     }
 
     @Override
-    public <T extends Block, U extends BlockItem> void registerBlock(CompatDoubleHolder.BlockHolder<T> doubleHolder, Supplier<T> blockSup, Supplier<U> itemSup) {
+    public <T extends Block> void registerBlock(CompatDoubleHolder.BlockHolder<T> doubleHolder, Supplier<T> blockSup, Item.Properties properties) {
         RegistryObject<T> deferredBlock = BLOCKS.register(doubleHolder.getBlockHolder().getId(), blockSup);
-        RegistryObject<BlockItem> deferredItem = ITEMS.register(doubleHolder.getItemHolder().getId(), itemSup);
+        RegistryObject<BlockItem> deferredItem = ITEMS.register(doubleHolder.getItemHolder().getId(), () -> new BlockItem(deferredBlock.get(), properties));
         doubleHolder.getBlockHolder().set(deferredBlock);
         doubleHolder.getItemHolder().set(deferredItem);
     }
@@ -70,7 +70,8 @@ public final class ForgeRegistryPlatform implements IRegistryPlatform {
 
     @Override
     public <T extends AbstractContainerMenu> void registerMenuType(CompatHolder<MenuType<T>> compatHolder, CompatMenuSupplier<T> supplier) {
-        MENU_TYPES.register(compatHolder.getId(), () -> new MenuType<AbstractContainerMenu>(supplier::create, FeatureFlags.DEFAULT_FLAGS));
+        RegistryObject<MenuType<T>> deferredHolder = MENU_TYPES.register(compatHolder.getId(), () -> new MenuType<T>(supplier::create, FeatureFlags.DEFAULT_FLAGS));
+        compatHolder.set(deferredHolder);
     }
 
     @Override
